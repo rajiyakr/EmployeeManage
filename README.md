@@ -1,5 +1,9 @@
 ## About the Project
 
+## Demo
+![Demo of EmployeeManage App](Home Page - EmployeeManage - Personal - Microsoft​ Edge 2025-07-04 00-57-04.mp4)
+
+
 `EmployeeManage` is a robust ASP.NET Core MVC application designed to streamline the management of employee information and tasks within an organization. It provides a centralized system for HR and team leads to keep track of employee details, assign and monitor tasks, and manage departments efficiently.
 
 This project was developed with a focus on a clean, intuitive user interface and reliable backend functionality, utilizing modern web development practices.
