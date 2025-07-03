@@ -52,7 +52,7 @@ To get a local copy up and running, follow these simple steps.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/YOUR_GITHUB_USERNAME/EmployeeManage.git](https://github.com/YOUR_GITHUB_USERNAME/EmployeeManage.git)
+    git clone [https://github.com/YOUR_GITHUB_rajiyakr/EmployeeManage.git](https://github.com/YOUR_GITHUB_rajiyakr/EmployeeManage.git)
     cd EmployeeManage
     ```
 2.  **Restore NuGet packages:**
