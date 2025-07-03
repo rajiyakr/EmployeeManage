@@ -1,0 +1,65 @@
+﻿@model IEnumerable<EmployeeManage.Models.EmployeeWithTaskCountViewModel>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="SearchTerm" class="form-control" placeholder="Search by name, department or email" value="@ViewData["CurrentFilter"]" />
+        <select name="isActive" class="form-select ms-2">
+            <option value="">All</option>
+            <option value="true" selected="@(ViewData["CurrentIsActive"]?.ToString() == "True" ? "selected" : null)">Active</option>
+            <option value="false" selected="@(ViewData["CurrentIsActive"]?.ToString() == "False" ? "selected" : null)">Inactive</option>
+        </select>
+        <button type="submit" class="btn btn-primary ms-2">Search</button>
+        <a asp-action="ExportEmployeesToExcel" class="btn btn-success ms-2">Export to Excel</a>
+    </div>
+</form>
+
+<h1>Employee List</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary mb-1">Create New</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-primary">
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Requests</th> 
+            <th>Active Task</th>
+            <th>Hire Date</th>
+            <th>Image</th>
+            <th>Is Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee.Name</td>
+                <td>@item.Employee.Department</td>
+                <td>@item.Employee.EmailAddress</td>
+                <td>@item.Employee.Phone</td>
+                <td>@item.Employee.Requests</td>
+                <td>@item.ActiveTask</td>
+                <td>@item.Employee.HireDate.ToShortDateString()</td>
+                <td>
+                    <img src="@Url.Content(item.Employee.ImagePath)" alt="Employee Photo" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;" />
+                </td>
+                <td>@item.Employee.IsActive</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Employee.Id" class="btn btn-sm rounded-pill btn-warning w-100">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Employee.Id" class="btn btn-sm rounded-pill btn-info w-100">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Employee.Id" class="btn btn-sm rounded-pill btn-danger w-100">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

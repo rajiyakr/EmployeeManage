@@ -1,0 +1,60 @@
+﻿@model IEnumerable<EmployeeManage.Models.Task>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tasks</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AssignedTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            string cellClass = item.Status switch
+            {
+                "Pending" => "bg-warning bg-opacity-25",
+                "Incomplete" => "bg-danger bg-opacity-25",
+                "Completed" => "bg-success bg-opacity-25",
+                _ => ""
+            };
+         <tr >
+                <td class="@cellClass">
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+                <td class="@cellClass">
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+                <td class="@cellClass">
+                @Html.DisplayFor(modelItem => item.AssignedTo)
+            </td>
+                <td class="@cellClass">
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+                <td class="@cellClass">
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning ">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info ">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger ">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
