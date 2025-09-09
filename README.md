@@ -68,9 +68,7 @@ To get a local copy up and running, follow these simple steps.
     * Configure your database connection string:
         ```json
         "ConnectionStrings": {
-          "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=EmployeeManageDb;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False;"
-          // Replace YOUR_SERVER_NAME with your SQL Server instance name (e.g., DESKTOP-ABCDEF\SQLEXPRESS)
-          // For production, consider using a more secure connection string.
+          "DefaultConnection": "Server=;Database=EmployeeManageDb;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False;"
         }
         ```
 
