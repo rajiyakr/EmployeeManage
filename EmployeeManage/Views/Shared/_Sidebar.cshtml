@@ -1,0 +1,128 @@
+﻿ <!--begin::Sidebar-->
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <!--begin::Sidebar Brand-->
+    <div class="sidebar-brand">
+        <!--begin::Brand Link-->
+        <a href="./index.html" class="brand-link">
+            <!--begin::Brand Image-->
+            <img src="./assets/img/AdminLTELogo.png"
+                 alt="AdminLTE Logo"
+                 class="brand-image opacity-75 shadow" />
+            <!--end::Brand Image-->
+            <!--begin::Brand Text-->
+            <span class="brand-text fw-light">EMS</span>
+            <!--end::Brand Text-->
+        </a>
+        <!--end::Brand Link-->
+    </div>
+    <!--end::Sidebar Brand-->
+    <!--begin::Sidebar Wrapper-->
+    <div class="sidebar-wrapper">
+        <nav class="mt-2">
+            <!--begin::Sidebar Menu-->
+            <ul class="nav sidebar-menu flex-column"
+                data-lte-toggle="treeview"
+                role="navigation"
+                aria-label="Main navigation"
+                data-accordion="false"
+                id="navigation">
+                <li class="nav-item menu-open">
+                   
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" id="login" asp-area="Employees" asp-action="Index">
+                                <i class="bi bi-people-fill"></i>
+                                <p>Employees</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" id="login" asp-area="Tasks" asp-action="Index">
+                                <i class="bi bi-card-checklist"></i>
+                                <p>Tasks</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/PublicHolidays" class="nav-link">
+                                <i class="bi bi-calendar"></i>
+                                <p>Public Holidays</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/Chat" class="nav-link">
+                                <i class="bi bi-chat"></i>
+                                <p>Chat</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+               
+                
+                       
+                    </ul>
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                        <p>
+                            Auth
+                            <i class="right bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <!-- hidden by default -->
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">
+                                <p>Login</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">
+                                <p>Register</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+                        
+                            
+                        
+               
+                    
+                    
+                <li class="nav-item">
+                    <a href="./docs/faq.html" class="nav-link">
+                        <i class="nav-icon bi bi-question-circle-fill"></i>
+                        <p>FAQ</p>
+                    </a>
+                </li>
+                
+                      
+            </ul>
+            <!--end::Sidebar Menu-->
+        </nav>
+    </div>
+    <!--end::Sidebar Wrapper-->
+<!--end::Sidebar-->
+</aside>
+
+
+
+@* <!-- Sidebar Column -->
+<div class="col-lg-2 col-md-3 col-sm-12 mb-3 sidebar">
+    <div class="sidebar bg-primary opacity-5 font">
+        <a class="nav-link text-white" asp-area="" asp-controller="Employees" asp-action="Index">
+            <i class="fas fa-users text-white"></i> Employee Details
+        </a>
+        <!-- You had a duplicate link, keeping one for now. Add more as needed. -->
+        <a class="nav-link text-white" asp-area="" asp-controller="Departments" asp-action="Index">
+            <i class="fas fa-building text-white"></i> Departments
+        </a>
+        <a class="nav-link text-white" asp-area="" asp-controller="Reports" asp-action="Index">
+            <i class="fas fa-chart-line text-white"></i> Reports
+        </a>
+        <!-- Add more sidebar links here with appropriate icons -->
+    </div>
+</div> *@

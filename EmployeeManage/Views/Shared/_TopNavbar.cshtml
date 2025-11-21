@@ -1,0 +1,288 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using EmployeeManage.Models;
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!--begin::Header-->
+<nav class="app-header navbar navbar-expand bg-body">
+    <!--begin::Container-->
+    <div class="container-fluid">
+        <!--begin::Start Navbar Links-->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                    <i class="bi bi-list"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </li>
+
+
+        </ul>
+        <!--end::Start Navbar Links-->
+        <!--begin::End Navbar Links-->
+        <ul class="navbar-nav ms-auto">
+            <!--begin::Navbar Search-->
+            <li class="nav-item">
+                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                    <i class="bi bi-search"></i>
+                </a>
+            </li>
+
+            <!--end::Navbar Search-->
+            <!--begin::Messages Dropdown Menu-->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                    <i class="bi bi-chat-text"></i>
+                    <span id="navbar-message-badge" class="navbar-badge badge text-bg-danger">0</span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" id="messageDropdown">
+                    <div id="messageListContainer">
+                        <p class="dropdown-item text-center text-muted">No messages yet</p>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a href="/Chat" class="dropdown-item dropdown-footer">See All Messages</a>
+                </div>
+            </li>
+
+
+            <!--end::Messages Dropdown Menu-->
+            <!--begin::Notifications Dropdown Menu-->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="navbar-badge badge text-bg-warning">15</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                    <span class="dropdown-item dropdown-header">15 Notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="bi bi-envelope me-2"></i> 4 new messages
+                        <span class="float-end text-secondary fs-7">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="bi bi-people-fill me-2"></i> 8 friend requests
+                        <span class="float-end text-secondary fs-7">12 hours</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
+                        <span class="float-end text-secondary fs-7">2 days</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
+                </div>
+            </li>
+            <!--end::Notifications Dropdown Menu-->
+            <!--begin::Fullscreen Toggle-->
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-lte-toggle="fullscreen">
+                    <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+                    <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
+                </a>
+            </li>
+            <!--end::Fullscreen Toggle-->
+
+
+        @*     <li class="nav-item dropdown">
+                <button class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle d-flex align-items-center"
+                        id="bd-theme"
+                        type="button"
+                        aria-expanded="false"
+                        data-bs-toggle="dropdown"
+                        data-bs-display="static">
+                    <span class="theme-icon-active"> <i class="my-1"></i> </span>
+                    <span class="d-lg-none ms-2" id="bd-theme-text">Toggle theme</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="bd-theme-text"
+                    style="--bs-dropdown-min-width: 8rem">
+                    <li>
+                        <button type="button"
+                                class="dropdown-item d-flex align-items-center active"
+                                data-bs-theme-value="light"
+                                aria-pressed="false">
+                            <i class="bi bi-sun-fill me-2"></i>
+                            Light
+                            <i class="bi bi-check-lg ms-auto d-none"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button"
+                                class="dropdown-item d-flex align-items-center"
+                                data-bs-theme-value="dark"
+                                aria-pressed="false">
+                            <i class="bi bi-moon-fill me-2"></i>
+                            Dark
+                            <i class="bi bi-check-lg ms-auto d-none"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button"
+                                class="dropdown-item d-flex align-items-center"
+                                data-bs-theme-value="auto"
+                                aria-pressed="true">
+                            <i class="bi bi-circle-fill-half-stroke me-2"></i>
+                            Auto
+                            <i class="bi bi-check-lg ms-auto d-none"></i>
+                        </button>
+                    </li>
+                </ul>
+            </li>
+        </ul> *@
+
+        <!--begin::User Menu Dropdown-->
+        @{
+            // Try to get Employee from ViewData, ViewBag, or Model
+            Employee? employee = null;
+            if (ViewData["Employee"] is Employee empFromViewData)
+            {
+                employee = empFromViewData;
+            }
+            else if (ViewBag.Employee is Employee empFromViewBag)
+            {
+                employee = empFromViewBag;
+            }
+            else if (Model is Employee empFromModel)
+            {
+                employee = empFromModel;
+            }
+        }
+        <li class="nav-item dropdown user-menu">
+            @* <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img src="@(employee?.ImagePath ?? "/assets/img/default-user.png")"
+                     class="user-image rounded-circle shadow"
+                     alt="User Image" />
+
+            </a> *@
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <!--begin::User Image-->
+                <li class="user-header text-bg-primary">
+                    <img src="@(employee?.ImagePath ?? "/assets/img/default-user.png")"
+                         class="rounded-circle shadow"
+                         alt="User Image" />
+
+                </li>
+                <!--end::User Image-->
+                <!--begin::Menu Body-->
+                <li class="user-body">
+                    <!--begin::Row-->
+                    <div class="row">
+                        <div class="col-4 text-center"><a href="#">Followers</a></div>
+                        <div class="col-4 text-center"><a href="#">Sales</a></div>
+                        <div class="col-4 text-center"><a href="#">Friends</a></div>
+                    </div>
+                    <!--end::Row-->
+                </li>
+                <!--end::Menu Body-->
+                <!--begin::Menu Footer-->
+                <li class="user-footer">
+                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                </li>
+                <!--end::Menu Footer-->
+            </ul>
+        </li>
+        <!--end::User Menu Dropdown-->
+        <partial name="_LoginPartial" />
+        </ul>
+        <!--end::End Navbar Links-->
+    </div>
+    <!--end::Container-->
+</nav>
+<!--end::Header-->
+
+<script>
+    // --------------------------------------------------------
+    // 1. AdminLTE Sidebar Toggle Logic
+    // --------------------------------------------------------
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('[data-lte-toggle="sidebar"]').forEach(function (btn) {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                document.body.classList.toggle("sidebar-collapsed");
+            });
+        });
+    });
+</script>
+
+<!-- CRITICAL: SignalR CDN must be loaded before attempting to use 'signalR' object -->
+@* <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+
+<script>
+    // --------------------------------------------------------
+    // 2. SignalR Unread Message Badge Logic
+    // --------------------------------------------------------
+    // Get the current authenticated username for self-message filtering
+
+
+    // Get the badge element (ID must match the element in the HTML above)
+    const badgeElement = document.getElementById("navbar-message-badge");
+    let unreadCount = 0;
+
+    // Helper function to update the badge's visibility and count
+    function updateBadge() {
+        if (badgeElement) {
+            badgeElement.textContent = unreadCount;
+            // Only show the badge if unreadCount is greater than zero
+            // We use the 'hidden' class or check the text content for '0' to manage visibility
+            if (unreadCount > 0) {
+                badgeElement.style.display = 'inline'; // Show the badge
+            } else {
+                badgeElement.style.display = 'none'; // Hide the badge
+            }
+        }
+    }
+
+    // Initialize the badge state on load (based on the content already rendered)
+    if (badgeElement) {
+        // Retrieve initial count from the DOM if available, otherwise start at 0
+        unreadCount = parseInt(badgeElement.textContent) || 0;
+        updateBadge();
+    }
+
+
+      window.connection.on("ReceiveMessage", function (sender, message, sentAt) {
+        if (sender !== window.currentUserName) {
+            unreadCount++;
+            updateBadge();
+            console.log(`New message from ${sender}. Unread count: ${unreadCount}`);
+        }
+    });
+
+
+    window.connection.start().catch(err => console.error("SignalR Navbar Connection Error:", err.toString()));
+</script> *@
+
+@* <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EmployeeManage</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Index">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                </ul>
+                <partial name="_loginPartial" />
+            </div>
+        </div>
+    </nav>
+</header> *@

@@ -1,0 +1,112 @@
+﻿@page
+@model EmployeeManage.Pages.IndexModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Public Holidays";
+    var currentYear = DateTime.Now.Year;
+}
+
+<style>
+    /* Custom table styles */
+    #holidayTable th {
+        background-color: #007bff;
+        color: #fff;
+        text-align: center;
+    }
+    #holidayTable td {
+        vertical-align: middle;
+        text-align: center;
+    }
+    #holidayTable tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    #holidayTable caption {
+        caption-side: top;
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #007bff;
+        padding-bottom: 0.5rem;
+    }
+</style>
+<div class="text-center">
+    <h1 class="display-4">Public Holidays</h1>
+    <form id="inputForm" class="mb-4">
+        <input type="text" id="yearValue" name="yearValue" class="form-control d-inline-block w-auto mx-2" placeholder="Enter Year Value" value="@currentYear" />
+        <input type="text" id="countryCode" name="countryCode" class="form-control d-inline-block w-auto mx-2" placeholder="Enter countryCode Value" value="AE" />
+        <button type="submit" class="btn btn-primary mx-2">Submit</button>
+    </form>
+</div>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="holidayTable" class="table table-striped table-hover table-bordered table-sm">
+                <caption>List of Public Holidays</caption>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Holiday Name</th>
+                        <th>Description</th>
+                        <th>Country</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        $("#inputForm").submit((e) => {
+            e.preventDefault();
+
+            var year = $("#yearValue").val();
+            var countryCode = $("#countryCode").val().toUpperCase();
+            var apiKey = "pu8cE9CxOoFSLalFBlY1DCXo99vEuOcy";
+
+            if (!year || !countryCode) {
+                alert("Please enter both year and country code!");
+                return;
+            }
+
+            var apiUrl = `https://calendarific.com/api/v2/holidays?api_key=${apiKey}&country=${countryCode}&year=${year}`;
+            console.log("Fetching:", apiUrl);
+
+            $.ajax({
+                url: apiUrl,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    var tableBody = $("#holidayTable tbody");
+                    tableBody.empty();
+
+                    var holidays = data.response && data.response.holidays ? data.response.holidays : [];
+
+                    if (holidays.length === 0) {
+                        tableBody.append("<tr><td colspan='5'>No holidays found.</td></tr>");
+                    } else {
+                        holidays.forEach(function (holiday) {
+                            var row = `
+                                <tr>
+                                    <td>${holiday.date.iso}</td>
+                                    <td>${holiday.name}</td>
+                                    <td>${holiday.description || "-"}</td>
+                                    <td>${holiday.country ? holiday.country.name : "-"}</td>
+                                    <td>${holiday.type ? holiday.type.join(", ") : ""}</td>
+                                </tr>`;
+                            tableBody.append(row);
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch holidays. Check your input or network.");
+                }
+            });
+        });
+
+        // Now trigger the submit ONCE after the handler is attached
+        $("#inputForm").submit();
+    });
+</script>

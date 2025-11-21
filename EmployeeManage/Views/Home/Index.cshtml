@@ -6,23 +6,24 @@
 
 <div class="container vh-100">
     <div class="row text-center">
-        <h1 class="display-4">Welcome</h1>
+        <h1 class="display-4 m-3 fw-bold">Welcome</h1>
     </div>
+    
     <section class="d-flex justify-content-evenly mt-3">
-        <div class="col-6 customColorCards" style="background-color: lightpink; cursor: pointer" onclick="window.location.href='/Employees/Index';">
+        <div class="col-4 m-2 p-2 text-center h-75" style="background-color: lightpink; cursor: pointer" onclick="window.location.href='/Employees/Index';">
             <h2>Employees</h2>
             <h6>Total: @ViewBag.TotalEmployees</h6>
         </div>
-        <div class="col-6 customColorCards" style="background-color:lightgreen; cursor: pointer " onclick="window.location.href='/Tasks/Index';">
+        <div class="col-4 m-2 p-2 text-center h-75" style=" background-color:lightgreen; cursor: pointer " onclick="window.location.href='/Tasks/Index';">
             <h2>Tasks</h2>
             <h6>@ViewBag.TotalActiveTasks</h6>
     </div>
     </section>
     <section class="d-flex justify-content-evenly mt-3">
-        <div class="col-6  customColorCards" style="background-color: cornsilk">
+        <div class="col-4 m-2 p-2 text-center h-75" style=" background-color: cornsilk">
             <h2>Department</h2>
         </div>
-        <div class="col-6 customColorCards" style=" background-color: aquamarine">
+        <div class="col-4 m-2 p-2 text-center h-75" style=" background-color: aquamarine">
             <h2>Chart</h2>
         </div>
     </section>
@@ -31,6 +32,6 @@
             FAQ
         </div>
     </section>
-
+    
 
 </div>

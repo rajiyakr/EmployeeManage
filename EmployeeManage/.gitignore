@@ -1,0 +1,12 @@
+﻿bin/
+obj/
+.vs/
+*.user
+*.suo
+*.dll
+*.exe
+*.log
+*.db
+appsettings.Development.json
+secrets.json
+wwwroot/lib/

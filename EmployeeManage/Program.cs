@@ -1,9 +1,14 @@
 using EmployeeManage.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using System.ComponentModel;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using EmployeeManage.Hubs;
+using System.Threading.Tasks; // Explicitly include this for Task and async/await
+using Microsoft.Extensions.Logging; // Include for the ILogger service in the exception handling
+
 using OfficeOpenXml;
+using System.ComponentModel;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,10 +33,16 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+// Configure SignalR services
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+builder.Services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
+
+
 
 var app = builder.Build();
 
-// ? Seed roles and admin user **before** app.Run()
+// Seed roles and admin user **before** app.Run()
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -70,6 +81,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
+        // Use the explicit ILogger import
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred while seeding the database with identity data.");
     }
@@ -95,7 +107,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-// ? app.Run must be last
+// CRITICAL: SignalR Hub mapping is correct and matches the client's '/chathub'
+app.MapHub<ChatHub>("/chathub");
+
+// app.Run must be last
 app.Run();
 
 // Dummy email sender
